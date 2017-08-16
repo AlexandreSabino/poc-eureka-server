@@ -1,0 +1,3 @@
+info:
+  build.artifact: '@project.artifactId@'
+  application.version: '@project.version@'

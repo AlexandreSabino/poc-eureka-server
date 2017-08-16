@@ -1,0 +1,31 @@
+info:
+  build:
+    artifact: '@project.artifactId@'
+  application:
+    name: ${spring.application.name}
+    version: '@project.version@'
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    registerWithEureka: true
+    fetchRegistry: true
+    registryFetchIntervalSeconds: 3
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+security:
+#  oauth2.resource:
+#    user-info-uri: http://security/user
+  ignored: /rest/security/oauth/**,/rest/pub/**,/**/swagger.json,/**/swagger-ui.html,/**/swagger-resources/**,/health,/**/health
+
+zuul:
+  ignored-services: gateway,configserver
+  sensitive-headers:
+  retryable: true
+
+ribbon:
+  ServerListRefreshInterval: 1000
+  ConnectTimeout: 3000
+  ReadTimeout: 60000

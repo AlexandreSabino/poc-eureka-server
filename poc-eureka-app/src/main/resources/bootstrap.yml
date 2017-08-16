@@ -1,0 +1,19 @@
+server.port: 8761
+
+spring:
+  application.name: eureka-app
+
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 3
+    leaseExpirationDurationInSeconds: 10
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+security:
+  ignored: /**
