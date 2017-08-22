@@ -1,9 +1,12 @@
 package com.biscoito.security.config;
 
 import com.biscoito.security.gateways.ClientDetailsImpl;
+import com.biscoito.security.gateways.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -12,6 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.TokenRequest;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
 import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter;
 import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -33,9 +37,21 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.passwordEncoder(passwordEncoder);
+        final OAuth2AuthenticationProcessingFilter oAuth2AuthenticationProcessingFilter = new OAuth2AuthenticationProcessingFilter();
+        oAuth2AuthenticationProcessingFilter.setAuthenticationManager(authenticationManager);
+        security.addTokenEndpointAuthenticationFilter(oAuth2AuthenticationProcessingFilter);
     }
 
     @Override
@@ -47,9 +63,10 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.tokenStore(tokenStore);
         endpoints.setClientDetailsService(clientDetailsService);
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        endpoints.accessTokenConverter(converter);
+        endpoints.userDetailsService(userDetailsService);
+        endpoints.accessTokenConverter(jwtAccessTokenConverter);
         endpoints.tokenGranter(createCustomTokenGranter(endpoints));
+        endpoints.reuseRefreshTokens(false);
     }
 
     private TokenGranter createCustomTokenGranter(final AuthorizationServerEndpointsConfigurer endpoints) {

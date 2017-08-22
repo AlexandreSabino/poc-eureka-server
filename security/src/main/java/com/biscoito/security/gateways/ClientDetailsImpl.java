@@ -16,6 +16,8 @@ public class ClientDetailsImpl implements ClientDetailsService {
         );
 
         clientDetails.setClientSecret("teste123");
+        clientDetails.setAccessTokenValiditySeconds(30);
+        clientDetails.setRefreshTokenValiditySeconds(60);
         return clientDetails;
     }
 }
