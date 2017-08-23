@@ -25,45 +25,45 @@ public class TokenStoreImpl extends JwtTokenStore {
         this.jdbcTokenStore = new JdbcTokenStore(dataSource);
     }
 
-    @Override
-    public void storeAccessToken(final OAuth2AccessToken token, final OAuth2Authentication authentication) {
-        final Collection<OAuth2AccessToken> tokens = this.findTokensByClientId(authentication.getOAuth2Request().getClientId());
-        tokens.forEach(this::removeAccessToken);
-        this.jdbcTokenStore.storeAccessToken(token, authentication);
-    }
-
-    @Override
-    public void removeAccessToken(final OAuth2AccessToken token) {
-        this.jdbcTokenStore.removeAccessToken(token);
-    }
-
-    @Override
-    public void storeRefreshToken(final OAuth2RefreshToken refreshToken, final OAuth2Authentication authentication) {
-        this.jdbcTokenStore.storeRefreshToken(refreshToken, authentication);
-    }
-
-    @Override
-    public void removeRefreshToken(final OAuth2RefreshToken token) {
-        this.jdbcTokenStore.removeRefreshToken(token);
-    }
-
-    @Override
-    public void removeAccessTokenUsingRefreshToken(final OAuth2RefreshToken refreshToken) {
-        this.jdbcTokenStore.removeAccessTokenUsingRefreshToken(refreshToken);
-    }
-
-    @Override
-    public Collection<OAuth2AccessToken> findTokensByClientId(final String clientId) {
-        return this.jdbcTokenStore.findTokensByClientId(clientId);
-    }
-
-    @Override
-    public OAuth2AccessToken readAccessToken(String tokenValue) {
-        final OAuth2AccessToken oAuth2AccessTokenDataBase = this.jdbcTokenStore.readAccessToken(tokenValue);
-        OAuth2AccessToken accessTokenMemory = super.readAccessToken(tokenValue);
-        if ((oAuth2AccessTokenDataBase != null) && (oAuth2AccessTokenDataBase.equals(accessTokenMemory))) {
-            return accessTokenMemory;
-        }
-        return null;
-    }
+//    @Override
+//    public void storeAccessToken(final OAuth2AccessToken token, final OAuth2Authentication authentication) {
+//        final Collection<OAuth2AccessToken> tokens = this.findTokensByClientId(authentication.getOAuth2Request().getClientId());
+//        tokens.forEach(this::removeAccessToken);
+//        this.jdbcTokenStore.storeAccessToken(token, authentication);
+//    }
+//
+//    @Override
+//    public void removeAccessToken(final OAuth2AccessToken token) {
+//        this.jdbcTokenStore.removeAccessToken(token);
+//    }
+//
+//    @Override
+//    public void storeRefreshToken(final OAuth2RefreshToken refreshToken, final OAuth2Authentication authentication) {
+//        this.jdbcTokenStore.storeRefreshToken(refreshToken, authentication);
+//    }
+//
+//    @Override
+//    public void removeRefreshToken(final OAuth2RefreshToken token) {
+//        this.jdbcTokenStore.removeRefreshToken(token);
+//    }
+//
+//    @Override
+//    public void removeAccessTokenUsingRefreshToken(final OAuth2RefreshToken refreshToken) {
+//        this.jdbcTokenStore.removeAccessTokenUsingRefreshToken(refreshToken);
+//    }
+//
+//    @Override
+//    public Collection<OAuth2AccessToken> findTokensByClientId(final String clientId) {
+//        return this.jdbcTokenStore.findTokensByClientId(clientId);
+//    }
+//
+//    @Override
+//    public OAuth2AccessToken readAccessToken(String tokenValue) {
+//        final OAuth2AccessToken oAuth2AccessTokenDataBase = this.jdbcTokenStore.readAccessToken(tokenValue);
+//        OAuth2AccessToken accessTokenMemory = super.readAccessToken(tokenValue);
+//        if ((oAuth2AccessTokenDataBase != null) && (oAuth2AccessTokenDataBase.equals(accessTokenMemory))) {
+//            return accessTokenMemory;
+//        }
+//        return null;
+//    }
 }
