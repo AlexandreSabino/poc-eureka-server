@@ -13,6 +13,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        //Tenta pegar do cache
+        //Se nao existe chama o endpoint cria o objeto e coloca no cache
         return new User("biscoito", "teste123", true, true, true, true, new ArrayList<>());
     }
 }

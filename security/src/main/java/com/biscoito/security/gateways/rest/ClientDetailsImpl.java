@@ -14,6 +14,8 @@ public class ClientDetailsImpl implements ClientDetailsService {
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
+        //Tenta pegar do cache
+        //Se nao existe chama o endpoint cria o objeto e coloca no cache
         final BaseClientDetails clientDetails = new BaseClientDetails(
                 "biscoito", "", "read,write", "client_credentials,refresh_token", ""
         );
