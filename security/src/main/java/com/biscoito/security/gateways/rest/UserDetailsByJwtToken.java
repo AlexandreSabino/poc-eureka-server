@@ -1,4 +1,4 @@
-package com.biscoito.security.gateways;
+package com.biscoito.security.gateways.rest;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.core.Authentication;

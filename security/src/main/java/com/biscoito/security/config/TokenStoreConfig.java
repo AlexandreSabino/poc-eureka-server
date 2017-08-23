@@ -1,6 +1,6 @@
 package com.biscoito.security.config;
 
-import com.biscoito.security.gateways.TokenStoreImpl;
+import com.biscoito.security.gateways.jdbc.TokenStoreImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

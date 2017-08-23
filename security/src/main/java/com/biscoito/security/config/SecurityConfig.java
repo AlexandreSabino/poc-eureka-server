@@ -1,7 +1,7 @@
 package com.biscoito.security.config;
 
-import com.biscoito.security.gateways.UserDetailsByJwtToken;
-import com.biscoito.security.gateways.UserDetailsServiceImpl;
+import com.biscoito.security.gateways.rest.UserDetailsByJwtToken;
+import com.biscoito.security.gateways.rest.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
