@@ -1,6 +1,5 @@
 package com.biscoito.security.gateways;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
@@ -32,7 +31,7 @@ public class UserDetailsByJwtToken<T extends Authentication> implements Authenti
 
     public UserDetails loadUserDetails(T authentication) throws UsernameNotFoundException {
         final String token = authentication.getPrincipal().toString();
-        Map<String, Object> jwt = jsonParser.parseMap(JwtHelper.decode(token).getClaims());
+        final Map<String, Object> jwt = jsonParser.parseMap(JwtHelper.decode(token).getClaims());
         return this.userDetailsService.loadUserByUsername(jwt.get("client_id").toString());
     }
 
