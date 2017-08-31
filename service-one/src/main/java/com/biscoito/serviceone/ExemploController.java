@@ -8,21 +8,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExemploController {
 
     @RequestMapping("/exemplo-1")
-    @PreAuthorize("hasRole('ROLE_TESTE')")
+    @PreAuthorize("hasRole('ROLE_MASTER')")
     public String exmplo1() {
-        return "ROLE_TESTE";
+        return "ROLE_MASTER";
     }
 
     @RequestMapping("/exemplo-2")
-    @PreAuthorize("hasAnyRole('ROLE_TESTE', 'ROLE_MASTER', 'ROLE_OUTRA')")
+    @PreAuthorize("hasAnyRole('ROLE_MASTER.CADASTRO_FORNECEDOR', 'ROLE_MASTER.GERAR_REMESSA')")
     public String exmplo2() {
         return "hasAnyRole";
     }
 
     @RequestMapping("/exemplo-3")
-    @PreAuthorize("hasRole('ROLE_PERFIL.FUNCIONALIDADE')")
+    @PreAuthorize("hasRole('ROLE_MASTER.CADASTRO_FORNECEDOR')")
     public String exmplo3() {
-        return "FUNCIONALIDADE";
+        return "ROLE_MASTER.CADASTRO_FORNECEDOR";
     }
 
     @RequestMapping("/exemplo-4")
